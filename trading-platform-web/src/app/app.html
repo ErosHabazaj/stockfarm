@@ -1,0 +1,23 @@
+<!-- top bar shown only when logged in theme toggle lives inside it -->
+@if (auth.isLoggedIn()) {
+  <mat-toolbar class="topbar">
+    <span class="brand">Stockfarm</span>
+
+    <nav class="links">
+      <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a mat-button routerLink="/stocks" routerLinkActive="active">Stocks</a>
+      <a mat-button routerLink="/history" routerLinkActive="active">History</a>
+      @if (isAdmin) {
+        <a mat-button routerLink="/admin" routerLinkActive="active">Admin</a>
+      }
+    </nav>
+
+    <span class="spacer"></span>
+    <app-notification-bell />
+    <app-theme-toggle />
+    <button mat-button (click)="logout()">Logout</button>
+  </mat-toolbar>
+}
+
+<!-- router swaps the current page in here -->
+<router-outlet />

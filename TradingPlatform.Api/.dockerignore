@@ -1,0 +1,5 @@
+# dont ship build junk or secrets into the image
+bin/
+obj/
+*.user
+appsettings.Development.json

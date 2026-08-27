@@ -1,0 +1,35 @@
+<div class="home">
+  <!-- animated background theme driven -->
+  <app-dither
+    class="bg"
+    [waveColor]="theme.waveColor()"
+    [bgColor]="theme.bgColor()"
+    [waveSpeed]="0.02"
+    [waveFrequency]="3"
+    [waveAmplitude]="0.35"
+    [colorNum]="4"
+    [pixelSize]="2"
+    [enableMouseInteraction]="true"
+    [mouseRadius]="0.5"
+  >
+  </app-dither>
+
+  <!-- header bar brand left auth buttons right -->
+  <header class="topbar">
+    <span class="brand">Stockfarm</span>
+    <nav class="actions">
+      <a mat-stroked-button routerLink="/login">Log in</a>
+      <a mat-flat-button color="primary" routerLink="/register">Create account</a>
+      <app-theme-toggle />
+    </nav>
+  </header>
+
+  <!-- floating headline with a mouse driven tilt -->
+  <section class="hero" [style.transform]="heroTransform()">
+    <h1 class="headline">
+      <span class="typed">{{ text() }}</span
+      ><span class="caret" aria-hidden="true"></span>
+    </h1>
+    <p class="sub">Live prices, your portfolio, and orders. All in one place.</p>
+  </section>
+</div>

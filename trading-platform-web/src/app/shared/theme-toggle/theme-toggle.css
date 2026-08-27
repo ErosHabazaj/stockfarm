@@ -1,0 +1,83 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* inline by default sits in a bar */
+.theme-toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #f59e0b; /* sun = gold */
+  background: rgba(120, 120, 120, 0.18);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.2s ease;
+}
+
+/* floating variant for pages with no bar */
+.theme-toggle.floating {
+  position: fixed;
+  top: 0.6rem;
+  right: 0.75rem;
+  z-index: 1100;
+}
+
+.theme-toggle:hover {
+  background: rgba(120, 120, 120, 0.3);
+}
+
+.theme-toggle.dark {
+  color: #cbd5e1; /* moon = soft silver */
+}
+
+.sun-and-moon {
+  width: 24px;
+  height: 24px;
+}
+
+/* fill box makes center mean the elements own center */
+.sun-and-moon > .sun {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.5s cubic-bezier(0.5, 1.25, 0.75, 1.25);
+}
+
+.sun-and-moon > .sun-beams {
+  transform-box: fill-box;
+  transform-origin: center;
+  stroke-width: 2px;
+  transition: transform 0.5s cubic-bezier(0.5, 1.5, 0.75, 1.25), opacity 0.5s ease;
+}
+
+.sun-and-moon .moon > circle {
+  transition: transform 0.25s cubic-bezier(0, 0, 0, 1);
+}
+
+/* dark state morph */
+.theme-toggle.dark .sun-and-moon > .sun {
+  transform: scale(1.75);
+}
+
+.theme-toggle.dark .sun-and-moon > .sun-beams {
+  transform: rotate(-25deg);
+  opacity: 0;
+}
+
+.theme-toggle.dark .sun-and-moon .moon > circle {
+  transform: translateX(-7px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sun-and-moon > .sun,
+  .sun-and-moon > .sun-beams,
+  .sun-and-moon .moon > circle {
+    transition: none;
+  }
+}

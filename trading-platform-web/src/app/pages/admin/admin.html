@@ -1,0 +1,79 @@
+<div class="admin">
+  <h1>Admin</h1>
+
+  <!-- customers -->
+  <mat-card>
+    <mat-card-header><mat-card-title>Customers</mat-card-title></mat-card-header>
+    <mat-card-content>
+      <table class="tbl">
+        <thead>
+          <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          @for (u of users(); track u.id) {
+            <tr>
+              <td>{{ u.name }}</td>
+              <td>{{ u.email }}</td>
+              <td>{{ u.role }}</td>
+              <td><span class="chip {{ u.status.toLowerCase() }}">{{ u.status }}</span></td>
+              <td class="actions">
+                @if (u.role === 'Customer') {
+                  <button mat-stroked-button color="primary"
+                          [disabled]="u.status === 'Approved'"
+                          (click)="setUserStatus(u, 'Approved')">Approve</button>
+                  <button mat-stroked-button color="warn"
+                          [disabled]="u.status === 'Restricted'"
+                          (click)="setUserStatus(u, 'Restricted')">Restrict</button>
+                } @else {
+                  <span class="muted">—</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- all orders -->
+  <mat-card>
+    <mat-card-header><mat-card-title>All orders</mat-card-title></mat-card-header>
+    <mat-card-content>
+      @if (orders().length === 0) {
+        <p>No orders yet.</p>
+      } @else {
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Date</th><th>User</th><th>Symbol</th><th>Type</th>
+              <th class="num">Qty</th><th class="num">Price</th><th>Status</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (o of orders(); track o.id) {
+              <tr>
+                <td>{{ o.createdAt | date:'short' }}</td>
+                <td>#{{ o.userId }}</td>
+                <td>{{ o.symbol }}</td>
+                <td>{{ o.type }}</td>
+                <td class="num">{{ o.quantity }}</td>
+                <td class="num">{{ o.price | currency }}</td>
+                <td><span class="chip {{ o.status.toLowerCase() }}">{{ o.status }}</span></td>
+                <td class="actions">
+                  @if (o.status === 'Pending') {
+                    <button mat-stroked-button color="primary"
+                            (click)="setOrderStatus(o, 'Completed')">Complete</button>
+                    <button mat-stroked-button color="warn"
+                            (click)="setOrderStatus(o, 'Rejected')">Reject</button>
+                  } @else {
+                    <span class="muted">—</span>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

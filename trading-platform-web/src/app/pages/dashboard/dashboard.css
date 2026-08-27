@@ -1,0 +1,116 @@
+.dash {
+  max-width: 900px;
+  margin: 1rem auto 3rem;
+  padding: 0 1rem;
+}
+
+/* title left button right */
+.dash-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+}
+
+.dash-head .titles h1 {
+  margin: 0;
+}
+
+.who {
+  color: #555;
+  margin: 0.4rem 0 0;
+}
+
+.banner {
+  padding: 0.9rem 1.15rem;
+  border-radius: 10px;
+  margin: 0 0 1.75rem;
+  line-height: 1.5;
+}
+
+.banner.approved {
+  background: #e6f4ea;
+  color: #1e4620;
+}
+
+.banner.pending {
+  background: #fff4e5;
+  color: #663c00;
+}
+
+.chart-card {
+  margin-bottom: 1.5rem;
+}
+
+/* symbol chips above the chart */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--mat-sys-outline-variant);
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.chip:hover {
+  border-color: var(--mat-sys-primary);
+}
+
+.chip.sel {
+  border-color: var(--mat-sys-primary);
+  background: color-mix(in srgb, var(--mat-sys-primary) 12%, var(--mat-sys-surface));
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tbl th,
+.tbl td {
+  text-align: left;
+  padding: 0.6rem 0.65rem;
+  border-bottom: 1px solid #eee;
+}
+
+.tbl .num {
+  text-align: right;
+}
+
+.hint {
+  color: #888;
+  font-size: 0.85rem;
+  margin: 0.85rem 0 0;
+}
+
+.err {
+  color: #b3261e;
+}

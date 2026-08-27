@@ -1,0 +1,32 @@
+<div class="history">
+  <h1>Order history</h1>
+
+  <mat-card>
+    <mat-card-content>
+      @if (orders().length === 0) {
+        <p>No orders yet. Head to <strong>Stocks</strong> to place one.</p>
+      } @else {
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Date</th><th>Symbol</th><th>Type</th>
+              <th class="num">Qty</th><th class="num">Price</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (o of orders(); track o.id) {
+              <tr>
+                <td>{{ o.createdAt | date:'short' }}</td>
+                <td>{{ o.symbol }}</td>
+                <td>{{ o.type }}</td>
+                <td class="num">{{ o.quantity }}</td>
+                <td class="num">{{ o.price | currency }}</td>
+                <td><span class="chip {{ o.status.toLowerCase() }}">{{ o.status }}</span></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

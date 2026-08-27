@@ -1,0 +1,56 @@
+/* scoped to this component angulars default encapsulation */
+.login-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+/* background fills the screen behind the card */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.login-card {
+  position: relative; /* own stacking layer */
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  padding: 0.75rem 0.75rem 1.25rem;
+}
+
+.login-card mat-card-header {
+  margin-bottom: 0.75rem;
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* make form fields fill the width */
+mat-form-field {
+  width: 100%;
+}
+
+.msg {
+  margin: 0.75rem 0 0;
+}
+
+.error {
+  color: #b3261e;
+}
+
+.success {
+  color: #2e7d32;
+}
+
+.switch {
+  margin-top: 1rem;
+}

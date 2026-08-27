@@ -1,0 +1,61 @@
+<div class="stocks">
+  <h1>Stocks</h1>
+
+  <div class="layout">
+    <!-- sidebar every stock click to select -->
+    <aside class="side">
+      @for (s of market.stocks(); track s.symbol) {
+        <button class="stock-row" [class.active]="s.symbol === selected()" (click)="select(s.symbol)">
+          <span class="sym">{{ s.symbol }}</span>
+          <span class="nm">{{ s.name }}</span>
+          <span class="row-bottom">
+            <span class="pr">{{ s.price | currency }}</span>
+            <span class="chg" [class.up]="changeOf(s.symbol) >= 0" [class.down]="changeOf(s.symbol) < 0">
+              {{ changeOf(s.symbol) >= 0 ? '▲' : '▼' }} {{ absChangeOf(s.symbol) | percent:'1.2-2' }}
+            </span>
+          </span>
+        </button>
+      } @empty {
+        <p class="loading">Loading stocks…</p>
+      }
+    </aside>
+
+    <!-- chart and trade actions for the selected stock -->
+    <section class="main">
+      @if (selectedStock(); as stock) {
+        <mat-card>
+          <mat-card-content>
+            <header class="chart-head">
+              <div>
+                <h2>{{ stock.symbol }} <span class="name">{{ stock.name }}</span></h2>
+                <p class="big-price">
+                  {{ stock.price | currency }}
+                  <span class="chg" [class.up]="rangeChange() >= 0" [class.down]="rangeChange() < 0">
+                    {{ rangeChange() >= 0 ? '▲' : '▼' }} {{ absRangeChange() | percent:'1.2-2' }}
+                  </span>
+                </p>
+              </div>
+              <div class="trade-btns">
+                <button mat-flat-button color="primary" (click)="trade('Buy')">Buy</button>
+                <button mat-stroked-button (click)="trade('Sell')">Sell</button>
+              </div>
+            </header>
+
+            <!-- range selector drives which candles the chart shows -->
+            <div class="ranges">
+              @for (r of ranges; track r.value) {
+                <button class="range-btn" [class.active]="range() === r.value" (click)="setRange(r.value)">
+                  {{ r.label }}
+                </button>
+              }
+            </div>
+
+            <app-candle-chart [candles]="candles()" [height]="320" />
+          </mat-card-content>
+        </mat-card>
+      } @else {
+        <mat-card><mat-card-content><p class="loading">Select a stock to see its chart.</p></mat-card-content></mat-card>
+      }
+    </section>
+  </div>
+</div>

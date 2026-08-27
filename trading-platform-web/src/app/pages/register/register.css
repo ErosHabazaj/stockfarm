@@ -1,0 +1,53 @@
+.auth-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  padding: 0.75rem 0.75rem 1.25rem;
+}
+
+.auth-card mat-card-header {
+  margin-bottom: 0.75rem;
+}
+
+.auth-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.msg {
+  margin: 0.75rem 0;
+}
+
+.error {
+  color: #b3261e;
+}
+
+.success {
+  color: #2e7d32;
+}
+
+.switch {
+  margin-top: 1rem;
+}

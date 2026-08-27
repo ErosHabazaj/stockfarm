@@ -1,0 +1,59 @@
+<div class="auth-wrapper">
+  <!-- no bar here so the toggle floats -->
+  <app-theme-toggle [floating]="true" />
+
+  <!-- animated webgl background color driven by the theme -->
+  <app-dither
+    class="bg"
+    [waveColor]="theme.waveColor()"
+    [bgColor]="theme.bgColor()"
+    [waveSpeed]="0.02"
+    [waveFrequency]="3"
+    [waveAmplitude]="0.35"
+    [colorNum]="4"
+    [pixelSize]="2"
+    [enableMouseInteraction]="true"
+    [mouseRadius]="0.5">
+  </app-dither>
+
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <mat-card-title>Create account</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (submitted()) {
+        <!-- no auto-login the account must verify via the emailed link first -->
+        <p class="msg">Check your email for a verification link to finish creating your account.</p>
+        <p class="switch"><a routerLink="/login">Back to log in</a></p>
+      } @else {
+        <form (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput name="name" [(ngModel)]="name" required />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" name="email" [(ngModel)]="email" required />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" [(ngModel)]="password" required />
+          </mat-form-field>
+
+          <button mat-flat-button color="primary" type="submit" [disabled]="submitting()">
+            {{ submitting() ? 'Registering…' : 'Register' }}
+          </button>
+        </form>
+
+        @if (error()) {
+          <p class="msg error">{{ error() }}</p>
+        }
+
+        <p class="switch">Already have an account? <a routerLink="/login">Log in</a></p>
+      }
+    </mat-card-content>
+  </mat-card>
+</div>

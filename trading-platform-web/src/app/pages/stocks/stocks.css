@@ -1,0 +1,156 @@
+.stocks {
+  max-width: 1000px;
+  margin: 1rem auto 3rem;
+  padding: 0 1rem;
+}
+
+.stocks h1 {
+  margin: 0 0 1.25rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* sidebar */
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stock-row {
+  display: grid;
+  gap: 0.15rem;
+  text-align: left;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.stock-row:hover {
+  border-color: var(--mat-sys-primary);
+}
+
+.stock-row.active {
+  border-color: var(--mat-sys-primary);
+  background: color-mix(in srgb, var(--mat-sys-primary) 12%, var(--mat-sys-surface));
+}
+
+.stock-row .sym {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.stock-row .nm {
+  font-size: 0.78rem;
+  color: var(--mat-sys-on-surface-variant);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 0.25rem;
+}
+
+.pr {
+  font-variant-numeric: tabular-nums;
+}
+
+/* change badge color plus arrow so its not color only */
+.chg {
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+.chg.up { color: #2e7d32; }
+.chg.down { color: #c62828; }
+
+/* main panel */
+.chart-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.chart-head h2 {
+  margin: 0;
+}
+
+.chart-head .name {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.big-price {
+  margin: 0.35rem 0 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.big-price .chg {
+  font-size: 0.95rem;
+}
+
+.trade-btns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* range selector pill buttons */
+.ranges {
+  display: flex;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+
+.range-btn {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 999px;
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.range-btn:hover {
+  border-color: var(--mat-sys-primary);
+}
+
+.range-btn.active {
+  border-color: var(--mat-sys-primary);
+  background: color-mix(in srgb, var(--mat-sys-primary) 14%, var(--mat-sys-surface));
+  color: var(--mat-sys-on-surface);
+}
+
+.loading {
+  color: var(--mat-sys-on-surface-variant);
+  padding: 1rem 0;
+}

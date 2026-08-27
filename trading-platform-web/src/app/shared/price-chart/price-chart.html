@@ -1,0 +1,58 @@
+@let v = vm();
+
+<div class="chart-wrap" [style.height.px]="v.h">
+  @if (v.empty) {
+    <p class="chart-empty">Loading chart…</p>
+  } @else {
+    <svg [attr.viewBox]="'0 0 ' + v.w + ' ' + v.h"
+         class="chart-svg"
+         (pointermove)="onMove($event)"
+         (pointerleave)="onLeave()">
+
+      <!-- gridlines and price labels -->
+      @if (showAxis()) {
+        @for (t of v.yTicks; track t.label) {
+          <line class="grid" [attr.x1]="v.padL" [attr.x2]="v.w - v.padR" [attr.y1]="t.y" [attr.y2]="t.y" />
+          <text class="axis-label" [attr.x]="v.padL - 6" [attr.y]="t.y + 3" text-anchor="end">{{ t.label }}</text>
+        }
+        @for (t of v.xTicks; track t.label; let i = $index) {
+          <text class="axis-label" [attr.x]="t.x" [attr.y]="v.h - 6"
+                [attr.text-anchor]="i === 0 ? 'start' : 'end'">{{ t.label }}</text>
+        }
+      }
+
+      <!-- one line per series -->
+      @for (s of v.series; track s.symbol) {
+        <path class="line" [attr.d]="s.path" [attr.stroke]="s.color" fill="none" />
+      }
+
+      <!-- hover crosshair and a dot on each line -->
+      @if (hoverIndex() !== null) {
+        @let idx = hoverIndex()!;
+        <line class="crosshair"
+              [attr.x1]="v.series[0].pts[idx].x" [attr.x2]="v.series[0].pts[idx].x"
+              [attr.y1]="v.padT" [attr.y2]="v.h - v.padB" />
+        @for (s of v.series; track s.symbol) {
+          <circle class="dot" [attr.cx]="s.pts[idx].x" [attr.cy]="s.pts[idx].y" r="3.5"
+                  [attr.fill]="s.color" />
+        }
+      }
+    </svg>
+
+    <!-- tooltip positioned by percent so it tracks any width -->
+    @if (hoverIndex() !== null) {
+      @let idx = hoverIndex()!;
+      <div class="tooltip"
+           [style.left.%]="hoverLeftPct()"
+           [class.flip]="hoverLeftPct() > 60">
+        <span class="tip-time">{{ hoverTime() }}</span>
+        @for (s of v.series; track s.symbol) {
+          <span class="tip-row">
+            <span class="swatch" [style.background]="s.color"></span>
+            {{ s.symbol }} <strong>{{ fmtPrice(s.pts[idx].price) }}</strong>
+          </span>
+        }
+      </div>
+    }
+  }
+</div>

@@ -1,0 +1,5 @@
+/* menu panel is styled globally it renders in an overlay */
+:host {
+  display: inline-flex;
+
+}

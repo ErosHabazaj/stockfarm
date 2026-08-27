@@ -1,0 +1,52 @@
+@let v = vm();
+
+<div class="chart-wrap" [style.height.px]="v.h">
+  @if (v.empty) {
+    <p class="chart-empty">Loading chart…</p>
+  } @else {
+    <svg [attr.viewBox]="'0 0 ' + v.w + ' ' + v.h"
+         class="chart-svg"
+         (pointermove)="onMove($event)"
+         (pointerleave)="onLeave()">
+
+      <!-- gridlines + price labels -->
+      @if (showAxis()) {
+        @for (t of v.yTicks; track t.label) {
+          <line class="grid" [attr.x1]="v.padL" [attr.x2]="v.w - v.padR" [attr.y1]="t.y" [attr.y2]="t.y" />
+          <text class="axis-label" [attr.x]="v.padL - 6" [attr.y]="t.y + 3" text-anchor="end">{{ t.label }}</text>
+        }
+        @for (t of v.xTicks; track $index; let i = $index) {
+          <text class="axis-label" [attr.x]="t.x" [attr.y]="v.h - 6"
+                [attr.text-anchor]="i === 0 ? 'start' : (i === v.xTicks.length - 1 ? 'end' : 'middle')">{{ t.label }}</text>
+        }
+      }
+
+      <!-- wick then body per candle up/down colours from css -->
+      @for (c of v.candles; track $index) {
+        <g [class.up]="c.up" [class.down]="!c.up">
+          <line class="wick" [attr.x1]="c.x" [attr.x2]="c.x" [attr.y1]="c.wickTop" [attr.y2]="c.wickBottom" />
+          <rect class="body" [attr.x]="c.x - c.bodyW / 2" [attr.y]="c.bodyY"
+                [attr.width]="c.bodyW" [attr.height]="c.bodyH" />
+        </g>
+      }
+
+      <!-- crosshair on the hovered candle -->
+      @if (hoverIndex() !== null && hoverIndex()! < v.candles.length) {
+        @let hc = v.candles[hoverIndex()!];
+        <line class="crosshair" [attr.x1]="hc.x" [attr.x2]="hc.x" [attr.y1]="v.padT" [attr.y2]="v.h - v.padB" />
+      }
+    </svg>
+
+    <!-- ohlc + volume tooltip positioned by percent so it tracks any width -->
+    @if (hoverCandle(); as c) {
+      <div class="tooltip" [style.left.%]="hoverLeftPct()" [class.flip]="hoverLeftPct() > 60">
+        <span class="tip-time">{{ fmtDate(c.time) }} {{ fmtTime(c.time) }}</span>
+        <span class="tip-row">Open <strong>{{ fmtPrice(c.open) }}</strong></span>
+        <span class="tip-row">High <strong>{{ fmtPrice(c.high) }}</strong></span>
+        <span class="tip-row">Low <strong>{{ fmtPrice(c.low) }}</strong></span>
+        <span class="tip-row">Close <strong>{{ fmtPrice(c.close) }}</strong></span>
+        <span class="tip-row">Volume <strong>{{ fmtVol(c.volume) }}</strong></span>
+      </div>
+    }
+  }
+</div>

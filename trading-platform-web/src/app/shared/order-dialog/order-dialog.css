@@ -1,0 +1,49 @@
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  padding-top: 0.5rem;
+}
+
+.note {
+  background: #fff4e5;
+  color: #663c00;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  margin: 0 0 1rem;
+}
+
+.side-toggle {
+  align-self: stretch;
+  margin-bottom: 1.25rem;
+}
+
+.side-toggle .mat-button-toggle {
+  flex: 1;
+}
+
+.qty {
+  width: 100%;
+}
+
+.price-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.25rem 0 0.5rem;
+}
+
+.price-line strong {
+  font-size: 1.25rem;
+}
+
+.hint {
+  color: var(--mat-sys-on-surface-variant);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.err {
+  color: #b3261e;
+  margin: 0.75rem 0 0;
+}

@@ -1,0 +1,106 @@
+.home {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* header bar */
+.topbar {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  /* glassy card slight transparency plus blur */
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--mat-sys-surface) 92%, transparent);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border: 1px solid color-mix(in srgb, var(--mat-sys-outline) 25%, transparent);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+  color: var(--mat-sys-on-surface);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* headline group gets the mouse tilt */
+.hero {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 1rem;
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.headline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin: 0;
+  min-height: 2.3em; /* reserve space so the layout doesnt jump */
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  color: var(--mat-sys-on-surface);
+  /* floating depth cue */
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  /* gentle idle bob independent of the tilt */
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.caret {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: var(--mat-sys-primary);
+  animation: caret-blink 1s step-end infinite;
+}
+
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+
+.sub {
+  margin: 1rem auto 0;
+  max-width: 42ch;
+  font-size: 1.15rem;
+  color: var(--mat-sys-on-surface-variant);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headline { animation: none; }
+  .caret { animation: none; }
+  .hero { transition: none; }
+}

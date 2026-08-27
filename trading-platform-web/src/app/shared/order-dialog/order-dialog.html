@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>{{ data.symbol }} — {{ data.name }}</h2>
+
+<mat-dialog-content>
+  @if (status() == 'Restricted') {
+    <p class="note">Your account is restricted, so ordering is disabled.</p>
+  } @else if (!canTrade()) {
+    <p class="note">Your account isn't approved yet, so ordering is disabled.</p>
+  }
+
+  <!-- buy sell toggle -->
+  <mat-button-toggle-group
+    [value]="type()"
+    (change)="type.set($event.value)"
+    [disabled]="!canTrade()"
+    class="side-toggle"
+  >
+    <mat-button-toggle value="Buy">Buy</mat-button-toggle>
+    <mat-button-toggle value="Sell">Sell</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-form-field appearance="outline" class="qty">
+    <mat-label>Quantity</mat-label>
+    <input
+      matInput
+      type="number"
+      name="quantity"
+      [(ngModel)]="quantity"
+      min="1"
+      [disabled]="!canTrade()"
+      required
+    />
+  </mat-form-field>
+
+  <div class="price-line">
+    <span>Market price</span>
+    <strong>{{ price() != null ? (price() | currency) : '—' }}</strong>
+  </div>
+  <p class="hint">Orders execute at the market price at the moment they're placed.</p>
+
+  @if (error()) {
+    <p class="err">{{ error() }}</p>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cancel</button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="placeOrder()"
+    [disabled]="!canTrade() || submitting()"
+  >
+    {{ submitting() ? 'Placing…' : type() + ' ' + data.symbol }}
+  </button>
+</mat-dialog-actions>

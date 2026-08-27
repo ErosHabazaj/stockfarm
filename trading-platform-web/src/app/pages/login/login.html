@@ -1,0 +1,52 @@
+<div class="login-wrapper">
+  <!-- no bar here so the toggle floats -->
+  <app-theme-toggle [floating]="true" />
+
+  <!-- animated webgl background -->
+  <app-dither
+    class="bg"
+    [waveColor]="theme.waveColor()"
+    [bgColor]="theme.bgColor()"
+    [waveSpeed]="0.02"
+    [waveFrequency]="3"
+    [waveAmplitude]="0.35"
+    [colorNum]="4"
+    [pixelSize]="2"
+    [enableMouseInteraction]="true"
+    [mouseRadius]="0.5">
+  </app-dither>
+
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>Log in</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if (notice()) {
+        <p class="msg">{{ notice() }}</p>
+      }
+
+      <form (ngSubmit)="onSubmit()">
+        <!-- mat form field draws the outline and label matinput marks the input -->
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" name="email" [(ngModel)]="email" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" name="password" [(ngModel)]="password" required />
+        </mat-form-field>
+
+        <!-- filled button primary pulls the theme color -->
+        <button mat-flat-button color="primary" type="submit">Log in</button>
+      </form>
+
+      @if (error()) {
+        <p class="msg error">{{ error() }}</p>
+      }
+
+      <p class="switch">No account yet? <a routerLink="/register">Create one</a></p>
+    </mat-card-content>
+  </mat-card>
+</div>

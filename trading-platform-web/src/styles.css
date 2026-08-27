@@ -1,0 +1,89 @@
+/* global styles */
+
+html, body { height: 100%; }
+
+/* dark class on html drives materials color scheme */
+:root { color-scheme: light; }
+:root.dark { color-scheme: dark; }
+
+body {
+  margin: 0;
+  font-family: 'IBM Plex Sans', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+
+:root:not(.dark) body { background: #f4f6f9; }
+:root.dark .tbl th,
+:root.dark .tbl td { border-bottom-color: rgba(255, 255, 255, 0.12) !important; }
+:root.dark .who,
+:root.dark .hint { color: #94a3b8 !important; }
+
+.notif-menu .mat-mdc-menu-content { padding: 0 !important; }
+.notif-panel { width: 280px; max-width: 88vw; }
+
+.notif-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem 0.6rem 1rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+/* keep the clear button clear of the panels rounded corner */
+.notif-head button {
+  flex: 0 0 auto;
+  margin-right: 0.15rem;
+}
+
+.notif-empty {
+  margin: 0;
+  padding: 1.75rem 1rem;
+  text-align: center;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.notif-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 380px;
+  overflow-y: auto;
+}
+
+.notif-item {
+  display: flex;
+  gap: 0.65rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+.notif-item:last-child { border-bottom: none; }
+
+.notif-body { display: flex; flex-direction: column; gap: 0.2rem; }
+.notif-msg { margin: 0; font-size: 0.9rem; line-height: 1.4; color: var(--mat-sys-on-surface); }
+.notif-time { font-size: 0.75rem; color: var(--mat-sys-on-surface-variant); }
+
+/* small dot carries the kind */
+.notif-item .dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  margin-top: 0.4rem;
+  border-radius: 50%;
+  background: var(--mat-sys-primary);
+}
+.notif-item.success .dot { background: #2e7d32; }
+.notif-item.error .dot { background: #c62828; }
+.notif-item.warning .dot { background: #ed6c02; }
+
+/* honour reduced motion requests */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

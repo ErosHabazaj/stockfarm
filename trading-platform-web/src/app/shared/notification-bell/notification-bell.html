@@ -1,0 +1,39 @@
+<!-- bell and unread badge hidden at zero -->
+<button mat-icon-button
+        [matMenuTriggerFor]="menu"
+        (menuOpened)="onOpened()"
+        [matBadge]="notifications.unread()"
+        [matBadgeHidden]="notifications.unread() === 0"
+        matBadgeColor="warn"
+        matBadgeSize="small"
+        aria-label="Notifications">
+  <mat-icon>notifications</mat-icon>
+</button>
+
+<!-- class is forwarded to the overlay panel so global notif menu styles reach it -->
+<mat-menu #menu="matMenu" class="notif-menu">
+  <div class="notif-panel" (click)="$event.stopPropagation()">
+    <header class="notif-head">
+      <span>Notifications</span>
+      @if (notifications.items().length) {
+        <button mat-button (click)="clear($event)">Clear all</button>
+      }
+    </header>
+
+    @if (notifications.items().length === 0) {
+      <p class="notif-empty">You're all caught up.</p>
+    } @else {
+      <ul class="notif-list">
+        @for (n of notifications.items(); track n.id) {
+          <li class="notif-item {{ n.kind }}">
+            <span class="dot" aria-hidden="true"></span>
+            <div class="notif-body">
+              <p class="notif-msg">{{ n.message }}</p>
+              <time class="notif-time">{{ n.at | date:'shortTime' }}</time>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</mat-menu>
