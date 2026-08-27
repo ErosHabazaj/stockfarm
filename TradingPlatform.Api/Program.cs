@@ -11,6 +11,13 @@ using TradingPlatform.Api.Authorization;
 using Microsoft.AspNetCore.Authorization;
 var builder = WebApplication.CreateBuilder(args);
 
+var hostingPort = Environment.GetEnvironmentVariable("PORT");
+if (!string.IsNullOrWhiteSpace(hostingPort))
+{
+    // Railway injects PORT; local launch profiles remain unchanged when it is absent.
+    builder.WebHost.UseUrls($"http://0.0.0.0:{hostingPort}");
+}
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException(
         "Missing ConnectionStrings:DefaultConnection. Configure it with user-secrets locally " +
@@ -141,11 +148,8 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-//only https in production not dev
-if (!app.Environment.IsDevelopment())
-{
-    app.UseHttpsRedirection();
-}
+// The hosting platform terminates public HTTPS before forwarding HTTP to Kestrel.
+// Redirecting based on that internal HTTP request can create a proxy redirect loop.
 
 // UseCors must sit BEFORE UseAuthentication/UseAuthorization so the permission
 // check runs before anything rejects the request.
@@ -154,6 +158,8 @@ app.UseCors(DevCorsPolicy);
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapGet("/health", () => Results.Ok(new { status = "ok" }))
+    .AllowAnonymous();
 app.MapControllers();
 
 app.Run();
