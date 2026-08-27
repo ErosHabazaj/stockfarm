@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: stockfarm-api
+    runtime: docker
+    plan: free
+    rootDir: TradingPlatform.Api
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: App__FrontendUrl
+        value: https://stockfarm-lemon.vercel.app
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: Jwt__Key
+        generateValue: true
+      - key: TwelveData__ApiKey
+        sync: false
+      - key: TwelveData__BaseUrl
+        value: https://api.twelvedata.com

@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 var hostingPort = Environment.GetEnvironmentVariable("PORT");
 if (!string.IsNullOrWhiteSpace(hostingPort))
 {
-    // Railway injects PORT; local launch profiles remain unchanged when it is absent.
+    // Cloud hosts inject PORT; local launch profiles remain unchanged when it is absent.
     builder.WebHost.UseUrls($"http://0.0.0.0:{hostingPort}");
 }
 
